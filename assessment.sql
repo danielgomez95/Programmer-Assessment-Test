@@ -159,17 +159,24 @@ OR
 -- 5. Write a query to display the staff and company data in a readable format
 
 WITH staff (FirstName, LastName, Email, RecordID) AS (
-	select
+	SELECT
 		staff.v001 as FirstName,
 		staff.v002 as LastName,
 		staff.v003 as Email,
 		staff.v004 as RecordID
-	from
+	FROM
 		[Record] staff
 	WHERE
-		staff.TableID = (select TableID from [Table] where TableName = 'Staff')
+		staff.TableID = (
+					SELECT 
+						TableID 
+					FROM 
+						[Table] 
+					WHERE 
+						TableName = 'Staff'
+				)
 ), company (CompanyName, Address, PhoneNumber, RecordID) AS (
-	select
+	SELECT
 		company.v001 as CompanyName,
 		company.v002 as Address,
 		company.v003 as PhoneNumber,
@@ -177,7 +184,14 @@ WITH staff (FirstName, LastName, Email, RecordID) AS (
 	FROM
 		[Record] company
 	WHERE
-		company.TableID = (select TableID from [Table] where TableName = 'Company')	
+		company.TableID = (
+					SELECT 
+						TableID 
+					FROM 
+						[Table] 
+					WHERE 
+						TableName = 'Company'
+				)
 )
 SELECT
 	c.CompanyName,
